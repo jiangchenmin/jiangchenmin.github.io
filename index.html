@@ -209,76 +209,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h1><h2 id="NFS-：扩展任务（linux系统之间的文件共享）"><a href="#NFS-：扩展任务（linux系统之间的文件共享）" class="headerlink" title="NFS ：扩展任务（linux系统之间的文件共享）"></a>NFS ：扩展任务（linux系统之间的文件共享）</h2><p> NFS服务器可以让PC将网络中的NFS服务器共享的目录挂载到本地端的文件系统中，而在本地端的系统中来看，那个远程主机的目录就好像是自己的一个磁盘分区一样，在使用上相当便利； </p>
-<p>yum   install -y  nfs-utils</p>
-<p>yum   install -y  rpcbind</p>
-<p>systemctl  start  rpcbind      启动rpc服务</p>
-<p>systemctl start  nfs-server   nfs-secure-server</p>
-<p>启动nfs服务和nfs安全传输服务</p>
-<p>systemctl enable  nfs-server  nfs-secure-server</p>
-<p>自启动</p>
-<p>firewall-cmd –permanent –add-service=nfs success</p>
-<p>配置防火墙方向nfs服务</p>
-<p>firewall-cmd –reload success</p>
-<p>首先创建共享目录   ，然后在/etc/exports配置文件中编辑配置即可</p>
-<p>mkdir   /public</p>
-<p>创建public共享目录</p>
-<p>vim  /etc/exports</p>
-<p> /public 192.168.245.0/24(ro) /protected </p>
-<p> /public 192.168.245.0/24(ro) </p>
-<p> /protected 192.168.245.0/24（rw） </p>
-<p> systemctl reload nfs  </p>
-<p> 重新加载NFS服务，使配置文件生效 </p>
-<h2 id="samba服务"><a href="#samba服务" class="headerlink" title="samba服务"></a>samba服务</h2><p><strong>修改防火墙设置</strong> </p>
-<p>#firewall-cmd –permanent –add-service=samba </p>
-<p>//设置防火墙 </p>
-<p>#firewall-cmd –reload        //重新加载防火墙</p>
-<p>安装 samba 并启动 samba 服务</p>
-<p># yum install -y samba samba-client </p>
-<p>#systemctl start smb.service nmb.service</p>
-<p><strong>建立共享目录</strong> </p>
-<p>mkdir /home/company</p>
-<p><strong>创建访问账号</strong> </p>
-<p>useradd -s /sbin/nologin xzusr </p>
-<p>useradd -s /sbin/nologin gcusr </p>
-<p>useradd -s /sbin/nologin xsusr </p>
-<p>#smbpasswd -a xzusr </p>
-<p>#smbpasswd -a gcusr </p>
-<p>#smbpasswd -a xsusr</p>
-<p>-a 添加 smb 帐号；-x 删除 smb 帐号；-d 禁用 smb 帐号；-e 启用 smb 帐号</p>
-<p><strong>修改配置文件：/etc/samba/smb.conf</strong> </p>
-<p>默认情况下，Samba 已经配置为允许用户通过远程共享访问账号的主目录。 </p>
-<p>[company]  //共享名称为 company </p>
-<p>comment = company share //共享注释 </p>
-<p>path = /home/company  //指定共享路径 </p>
-<p>browseable = yes  //所有人可见 </p>
-<p>guest ok = no  //拒绝匿名访问 </p>
-<p>writeable = yes  //支持写入数据 </p>
-<p>[company] </p>
-<p>comment = company share </p>
-<p>path = /home/company </p>
-<p>guest ok = no  //拒绝匿名访问 </p>
-<p>valid users=xzusr,gcusr,xsusr //允许访问的用户列表 </p>
-<p>write list=xzusr //允许写入的用户列表</p>
-<p>valid users-@tech</p>
-<p>write list=@tech   @代表用户组</p>
-<p>systemctl restart smb nmb使更改生效</p>
-<p>在 linux 客户端访问测试：smbclient -U smbuser //192.168.75.128/company </p>
-<p>查看服务器的共享文件有哪些：smbclient -L 192.168.75.128 </p>
-<p>查看 smbuser 用户可以访问的共享文件：smbclient -L 192.168.75.128 -U smbuser </p>
-<p><strong>在 Linux 下访问 Windows 共享目录的配置方法</strong> </p>
-<p>（1）在 Windows xp 上设置一个共享目录：d:\myfiles </p>
-<p>（2）在 Linux 下安装 samba-client 客户端 </p>
-<p># yum install samba-client </p>
-<p>（3）安装 cifs-utils 软件包 </p>
-<p># yum install cifs-utils </p>
-<p>（4）在 Linux 下创建一个挂载点 </p>
-<p># mkdir /mnt/Windows </p>
-<p>（5）挂载 Windows 上的共享目录 d:\myfiles 到 Linux 下的/mnt/Windows 目录下 </p>
-<p># mount -t cifs -o username=Administrator //192.168.0.3/mytest /mnt/Windows </p>
-<p>Enter password: <strong>****</strong> </p>
-<p>在/etc/fstab 文件中，加入该共享目录的挂载信息 </p>
-<p>//192.168.1.123/redhat_disk /mnt/Windows cifs username=tommy,password=111111 0 0 </p>
-
+        
+          <a class="article-more-a" href="/2020/02/05/文件共享/#more">more >></a>
+        
       
 
       
