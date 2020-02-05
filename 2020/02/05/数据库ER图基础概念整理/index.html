@@ -8,13 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>不忘初心</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="数据库ER图基础概念整理ER图分为实体、属性、关系三个核心部分 图形表示分别是 长方形，椭圆形，菱形">
+<meta property="og:type" content="article">
 <meta property="og:title" content="不忘初心">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/02/05/数据库ER图基础概念整理/index.html">
 <meta property="og:site_name" content="不忘初心">
+<meta property="og:description" content="数据库ER图基础概念整理ER图分为实体、属性、关系三个核心部分 图形表示分别是 长方形，椭圆形，菱形">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-05T00:33:25.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不忘初心">
+<meta name="twitter:description" content="数据库ER图基础概念整理ER图分为实体、属性、关系三个核心部分 图形表示分别是 长方形，椭圆形，菱形">
   
     <link rel="alternative" href="/atom.xml" title="不忘初心" type="application/atom+xml">
   
@@ -150,20 +154,52 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-数据库ER图基础概念整理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-数据库ER图基础概念整理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="数据库ER图基础概念整理"><a href="#数据库ER图基础概念整理" class="headerlink" title="数据库ER图基础概念整理"></a>数据库ER图基础概念整理</h1><p>ER图分为实体、属性、关系三个核心部分</p>
 <p>图形表示分别是 长方形，椭圆形，菱形</p>
-        
-          <a class="article-more-a" href="/2020/02/05/数据库ER图基础概念整理/#more">more >></a>
-        
+<a id="more"></a>
+
+<h2 id="一，组成部分介绍"><a href="#一，组成部分介绍" class="headerlink" title="一，组成部分介绍"></a>一，组成部分介绍</h2><h3 id="1，实体-entity-："><a href="#1，实体-entity-：" class="headerlink" title="1，实体(entity)："></a>1，实体(entity)：</h3><p>数据模型中的数据对像，每个实体都有自己的实体成员或者说实体对象，例如学生实体包括张三，李四</p>
+<h3 id="2，属性-attribute-："><a href="#2，属性-attribute-：" class="headerlink" title="2，属性(attribute)："></a>2，属性(attribute)：</h3><p>实体所具有的属性，例如学生具有姓名、学号、年级等属性，用椭圆形表示，属性分为唯一属性（ unique attribute）和非唯一属性，唯一属性指的是唯一可用来标识该实体实例或者成员的属性，用下划线表示，一般来讲实体都至少有一个唯一属性。</p>
+<h3 id="3，关系-relationship-："><a href="#3，关系-relationship-：" class="headerlink" title="3，关系(relationship)："></a>3，关系(relationship)：</h3><p>用来表现数据对象与数据对象之间的联系，例如学生的实体和成绩表的实体之间有一定的联系，每个学生都有自己的成绩表，这就是一种关系，关系用菱形来表示。</p>
+<h2 id="二，关联关系有三种："><a href="#二，关联关系有三种：" class="headerlink" title="二，关联关系有三种："></a>二，关联关系有三种：</h2><h3 id="（1）1对1（1-1）："><a href="#（1）1对1（1-1）：" class="headerlink" title="（1）1对1（1:1）："></a>（1）1对1（1:1）：</h3><p>指对于实体集A与实体集B，A中的每一个实体至多与B中一个实体有关系；反之，在实体集B中的每个实体至多与实体集A中一个实体有关系。</p>
+<h3 id="（2）1对多（1-N）："><a href="#（2）1对多（1-N）：" class="headerlink" title="（2）1对多（1:N）："></a>（2）1对多（1:N）：</h3><p>1对多关系是指实体集A与实体集B中至少有N(N&gt;0)个实体有关系；并且实体集B中每一个实体至多与实体集A中一个实体有关系。</p>
+<h3 id="（3）多对多（M-N）："><a href="#（3）多对多（M-N）：" class="headerlink" title="（3）多对多（M:N）："></a>（3）多对多（M:N）：</h3><p>多对多关系是指实体集A中的每一个实体与实体集B中至少有M(M&gt;0)个实体有关系，并且实体集B中的每一个实体与实体集A中的至少N（N&gt;0）个实体有关系。</p>
+<h2 id="三：ER实体补充讲解："><a href="#三：ER实体补充讲解：" class="headerlink" title="三：ER实体补充讲解："></a>三：ER实体补充讲解：</h2><h3 id="1，ER的实体分为弱实体-和-复合实体："><a href="#1，ER的实体分为弱实体-和-复合实体：" class="headerlink" title="1，ER的实体分为弱实体 和 复合实体："></a>1，ER的实体分为弱实体 和 复合实体：</h3><h4 id="弱实体："><a href="#弱实体：" class="headerlink" title="弱实体："></a>弱实体：</h4><p>一个实体必须依赖另一个实体存在，那么前者是弱实体，后者是强实体。</p>
+<p>弱实体和强实体的联系必然只有1：N或者1：1，这是由于弱实体完全依赖于强实体，强实体不存在，那么弱实体就不存在，所以弱实体是完全参与联系的，因此弱实体与强实体之间的联系也是用的双线菱形。</p>
+<h3 id="2，ER图的属性分为复合属性、多值属性和派生属性、可选属性，同时还有用来表示联系的属性，称为联系属性；"><a href="#2，ER图的属性分为复合属性、多值属性和派生属性、可选属性，同时还有用来表示联系的属性，称为联系属性；" class="headerlink" title="2，ER图的属性分为复合属性、多值属性和派生属性、可选属性，同时还有用来表示联系的属性，称为联系属性；"></a>2，ER图的属性分为复合属性、多值属性和派生属性、可选属性，同时还有用来表示联系的属性，称为联系属性；</h3><h4 id="（1）复合属性-composite-attribute-："><a href="#（1）复合属性-composite-attribute-：" class="headerlink" title="（1）复合属性(composite attribute)："></a>（1）复合属性(composite attribute)：</h4><p>复合属性是指具有多个属性的组合，例如名字属性，它可以包含姓氏属性和名字属性。  </p>
+<h4 id="（2）多值属性（multivalued-attribute）："><a href="#（2）多值属性（multivalued-attribute）：" class="headerlink" title="（2）多值属性（multivalued attribute）："></a>（2）多值属性（multivalued attribute）：</h4><p>一个实体的某个属性可以有多个不同的取值，例如一本书的分类属性，这本书有多个分类，例如科学、医学等，这个分类就是多值属性， 用双线椭圆表示。</p>
+<h4 id="（3）派生属性-derivers-attribute-："><a href="#（3）派生属性-derivers-attribute-：" class="headerlink" title="（3）派生属性(derivers attribute)："></a>（3）派生属性(derivers attribute)：</h4><p>是非永久性存于数据库的属性。派生属性的值可以从别的属性值或其他数据（如当前日期）派生出来，用虚线椭圆表示。 </p>
+<h4 id="（4）可选属性-optional-attribute-："><a href="#（4）可选属性-optional-attribute-：" class="headerlink" title="（4）可选属性(optional attribute)："></a>（4）可选属性(optional attribute)：</h4><p>并不是所有的属性都必须有值，有些属性的可以没有值，这就是可选属性，在椭圆的文字后用（O）来表示。</p>
+<h4 id="（5）联系属性："><a href="#（5）联系属性：" class="headerlink" title="（5）联系属性："></a>（5）联系属性：</h4><p>联系属于用户表示多个实体之间联系所具有的属性，一般来讲M:N的两个实体的联系具有联系属性，在1:1和1：M的实体联系中联系属性并不必要。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -172,16 +208,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/05/数据库ER图基础概念整理/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/05/数据库ER图基础概念整理/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/30/IP地址/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -201,266 +296,14 @@
 
 
 
+  
+  
+  
 
   
-    <article id="post-IP地址" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h1><h2 id="IPV4编址方案"><a href="#IPV4编址方案" class="headerlink" title="IPV4编址方案"></a>IPV4编址方案</h2><p>IP地址由32位二进制数组成，这些位被划分为4个字节，中间用“.”号隔开，每组8位，以十进制数形式表示。分为网络地址和主机地址两个部分。</p>
-<p>二进制数转十进制数：2^0x0+2^1x0</p>
-<p>128  64  32  16  8  4  2  1<br>IPV4一共有：2^32  大约40多亿个地址</p>
-        
-          <a class="article-more-a" href="/2020/01/30/IP地址/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/30/IP地址/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
 
   
-    <article id="post-IDS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="入侵检测系统（IDS）"><a href="#入侵检测系统（IDS）" class="headerlink" title="入侵检测系统（IDS）"></a>入侵检测系统（IDS）</h1><h2 id="入侵检测系统的作用"><a href="#入侵检测系统的作用" class="headerlink" title="入侵检测系统的作用"></a>入侵检测系统的作用</h2><p>防火墙的重要补充</p>
-<p>构建网络安全防御体系的重要环节</p>
-        
-          <a class="article-more-a" href="/2020/01/27/IDS/#more">more >></a>
-        
-      
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/27/IDS/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-端口安全及stp生成树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="端口安全"><a href="#端口安全" class="headerlink" title="端口安全"></a>端口安全</h1><h2 id="MAC表洪水（广播）攻击"><a href="#MAC表洪水（广播）攻击" class="headerlink" title="MAC表洪水（广播）攻击"></a>MAC表洪水（广播）攻击</h2><p>解决<br>1.端口主机数量限制<br>2.MAC地址、IP地址绑定</p>
-        
-          <a class="article-more-a" href="/2020/01/25/端口安全及stp生成树/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/25/端口安全及stp生成树/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NAT网络地址转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="NAT-网络地址转换"><a href="#NAT-网络地址转换" class="headerlink" title="NAT:网络地址转换"></a>NAT:网络地址转换</h1><p>将私有地址转换为公有地址。</p>
-<p>节约IP地址。</p>
-<p>可以隐藏内部，对内网可以起到一定的保护作用。</p>
-        
-          <a class="article-more-a" href="/2020/01/20/NAT网络地址转换/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/20/NAT网络地址转换/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ACL访问控制列表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ACL访问控制列表"><a href="#ACL访问控制列表" class="headerlink" title="ACL访问控制列表"></a>ACL访问控制列表</h1><p>在第三层，对数据包进行过滤</p>
-<p>ACL：规则集</p>
-<h2 id="两种类型"><a href="#两种类型" class="headerlink" title="两种类型"></a>两种类型</h2><p>标准ACL：检查源地址，通常允许或拒绝的是完整的协议。</p>
-<p>扩展ACL：检查源地址和目的地址，通常允许或拒绝的是某个特定的协议。</p>
-        
-          <a class="article-more-a" href="/2020/01/17/ACL访问控制列表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/17/ACL访问控制列表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -483,8 +326,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
