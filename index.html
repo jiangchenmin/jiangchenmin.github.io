@@ -152,6 +152,330 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-磁盘的分区与挂载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="磁盘挂载与分区"><a href="#磁盘挂载与分区" class="headerlink" title="磁盘挂载与分区"></a>磁盘挂载与分区</h1><p>whereis +命令   看命令路径</p>
+<p>ps awx 看进程</p>
+        
+          <a class="article-more-a" href="/2020/02/05/磁盘的分区与挂载/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/05/磁盘的分区与挂载/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-文件共享" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h1><h2 id="NFS-：扩展任务（linux系统之间的文件共享）"><a href="#NFS-：扩展任务（linux系统之间的文件共享）" class="headerlink" title="NFS ：扩展任务（linux系统之间的文件共享）"></a>NFS ：扩展任务（linux系统之间的文件共享）</h2><p> NFS服务器可以让PC将网络中的NFS服务器共享的目录挂载到本地端的文件系统中，而在本地端的系统中来看，那个远程主机的目录就好像是自己的一个磁盘分区一样，在使用上相当便利； </p>
+<p>yum   install -y  nfs-utils</p>
+<p>yum   install -y  rpcbind</p>
+<p>systemctl  start  rpcbind      启动rpc服务</p>
+<p>systemctl start  nfs-server   nfs-secure-server</p>
+<p>启动nfs服务和nfs安全传输服务</p>
+<p>systemctl enable  nfs-server  nfs-secure-server</p>
+<p>自启动</p>
+<p>firewall-cmd –permanent –add-service=nfs success</p>
+<p>配置防火墙方向nfs服务</p>
+<p>firewall-cmd –reload success</p>
+<p>首先创建共享目录   ，然后在/etc/exports配置文件中编辑配置即可</p>
+<p>mkdir   /public</p>
+<p>创建public共享目录</p>
+<p>vim  /etc/exports</p>
+<p> /public 192.168.245.0/24(ro) /protected </p>
+<p> /public 192.168.245.0/24(ro) </p>
+<p> /protected 192.168.245.0/24（rw） </p>
+<p> systemctl reload nfs  </p>
+<p> 重新加载NFS服务，使配置文件生效 </p>
+<h2 id="samba服务"><a href="#samba服务" class="headerlink" title="samba服务"></a>samba服务</h2><p><strong>修改防火墙设置</strong> </p>
+<p>#firewall-cmd –permanent –add-service=samba </p>
+<p>//设置防火墙 </p>
+<p>#firewall-cmd –reload        //重新加载防火墙</p>
+<p>安装 samba 并启动 samba 服务</p>
+<p># yum install -y samba samba-client </p>
+<p>#systemctl start smb.service nmb.service</p>
+<p><strong>建立共享目录</strong> </p>
+<p>mkdir /home/company</p>
+<p><strong>创建访问账号</strong> </p>
+<p>useradd -s /sbin/nologin xzusr </p>
+<p>useradd -s /sbin/nologin gcusr </p>
+<p>useradd -s /sbin/nologin xsusr </p>
+<p>#smbpasswd -a xzusr </p>
+<p>#smbpasswd -a gcusr </p>
+<p>#smbpasswd -a xsusr</p>
+<p>-a 添加 smb 帐号；-x 删除 smb 帐号；-d 禁用 smb 帐号；-e 启用 smb 帐号</p>
+<p><strong>修改配置文件：/etc/samba/smb.conf</strong> </p>
+<p>默认情况下，Samba 已经配置为允许用户通过远程共享访问账号的主目录。 </p>
+<p>[company]  //共享名称为 company </p>
+<p>comment = company share //共享注释 </p>
+<p>path = /home/company  //指定共享路径 </p>
+<p>browseable = yes  //所有人可见 </p>
+<p>guest ok = no  //拒绝匿名访问 </p>
+<p>writeable = yes  //支持写入数据 </p>
+<p>[company] </p>
+<p>comment = company share </p>
+<p>path = /home/company </p>
+<p>guest ok = no  //拒绝匿名访问 </p>
+<p>valid users=xzusr,gcusr,xsusr //允许访问的用户列表 </p>
+<p>write list=xzusr //允许写入的用户列表</p>
+<p>valid users-@tech</p>
+<p>write list=@tech   @代表用户组</p>
+<p>systemctl restart smb nmb使更改生效</p>
+<p>在 linux 客户端访问测试：smbclient -U smbuser //192.168.75.128/company </p>
+<p>查看服务器的共享文件有哪些：smbclient -L 192.168.75.128 </p>
+<p>查看 smbuser 用户可以访问的共享文件：smbclient -L 192.168.75.128 -U smbuser </p>
+<p><strong>在 Linux 下访问 Windows 共享目录的配置方法</strong> </p>
+<p>（1）在 Windows xp 上设置一个共享目录：d:\myfiles </p>
+<p>（2）在 Linux 下安装 samba-client 客户端 </p>
+<p># yum install samba-client </p>
+<p>（3）安装 cifs-utils 软件包 </p>
+<p># yum install cifs-utils </p>
+<p>（4）在 Linux 下创建一个挂载点 </p>
+<p># mkdir /mnt/Windows </p>
+<p>（5）挂载 Windows 上的共享目录 d:\myfiles 到 Linux 下的/mnt/Windows 目录下 </p>
+<p># mount -t cifs -o username=Administrator //192.168.0.3/mytest /mnt/Windows </p>
+<p>Enter password: <strong>****</strong> </p>
+<p>在/etc/fstab 文件中，加入该共享目录的挂载信息 </p>
+<p>//192.168.1.123/redhat_disk /mnt/Windows cifs username=tommy,password=111111 0 0 </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/05/文件共享/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-服务与进程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="服务与进程"><a href="#服务与进程" class="headerlink" title="服务与进程"></a>服务与进程</h1><h2 id="Linux系统的启动过程"><a href="#Linux系统的启动过程" class="headerlink" title="Linux系统的启动过程"></a>Linux系统的启动过程</h2><p>加电自检</p>
+<p>通过BIOS自检</p>
+        
+          <a class="article-more-a" href="/2020/02/05/服务与进程/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/05/服务与进程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-linux" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Linux系统"><a href="#Linux系统" class="headerlink" title="Linux系统"></a>Linux系统</h1><p>红帽</p>
+<p>ubantu</p>
+<p>cent OS 7</p>
+<p>免费，开源</p>
+<p>多用户，多任务</p>
+        
+          <a class="article-more-a" href="/2020/02/05/linux/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/05/linux/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-创建数据库和表：" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="创建数据库和表："><a href="#创建数据库和表：" class="headerlink" title="创建数据库和表："></a>创建数据库和表：</h1><p>create database t1;  – 创建数据库t1</p>
+<p>use t1;  – 进入数据库t1</p>
+        
+          <a class="article-more-a" href="/2020/02/05/创建数据库和表：/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/05/创建数据库和表：/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-数据库基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -406,111 +730,10 @@
 
 
   
-    <article id="post-NAT网络地址转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="NAT-网络地址转换"><a href="#NAT-网络地址转换" class="headerlink" title="NAT:网络地址转换"></a>NAT:网络地址转换</h1><p>将私有地址转换为公有地址。</p>
-<p>节约IP地址。</p>
-<p>可以隐藏内部，对内网可以起到一定的保护作用。</p>
-        
-          <a class="article-more-a" href="/2020/01/20/NAT网络地址转换/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/20/NAT网络地址转换/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-ACL访问控制列表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ACL访问控制列表"><a href="#ACL访问控制列表" class="headerlink" title="ACL访问控制列表"></a>ACL访问控制列表</h1><p>在第三层，对数据包进行过滤</p>
-<p>ACL：规则集</p>
-<h2 id="两种类型"><a href="#两种类型" class="headerlink" title="两种类型"></a>两种类型</h2><p>标准ACL：检查源地址，通常允许或拒绝的是完整的协议。</p>
-<p>扩展ACL：检查源地址和目的地址，通常允许或拒绝的是某个特定的协议。</p>
-        
-          <a class="article-more-a" href="/2020/01/17/ACL访问控制列表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/17/ACL访问控制列表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 

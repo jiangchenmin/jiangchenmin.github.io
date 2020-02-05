@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 不忘初心</title>
+  <title>不忘初心</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="服务与进程Linux系统的启动过程加电自检 通过BIOS自检">
+<meta property="og:type" content="article">
 <meta property="og:title" content="不忘初心">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/02/05/服务与进程/index.html">
 <meta property="og:site_name" content="不忘初心">
+<meta property="og:description" content="服务与进程Linux系统的启动过程加电自检 通过BIOS自检">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-05T04:11:35.824Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不忘初心">
+<meta name="twitter:description" content="服务与进程Linux系统的启动过程加电自检 通过BIOS自检">
   
     <link rel="alternative" href="/atom.xml" title="不忘初心" type="application/atom+xml">
   
@@ -150,235 +154,227 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-服务与进程" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="服务与进程"><a href="#服务与进程" class="headerlink" title="服务与进程"></a>服务与进程</h1><h2 id="Linux系统的启动过程"><a href="#Linux系统的启动过程" class="headerlink" title="Linux系统的启动过程"></a>Linux系统的启动过程</h2><p>加电自检</p>
+<p>通过BIOS自检</p>
+<a id="more"></a>
+
+<p>linux系统的运行级别</p>
+<p>运行级别0：关机模式：poweroff.target</p>
+<p>运行级别1：单用户模式，仅用于root用户对系统进行维护时。rescue.target</p>
+<p>运行级别2：多用户模式（没有NFS）。multi-user.target</p>
+<p>运行级别3：完全多用户模式，即多用户文本界面模式，是标准的运行级别。multi-user.target</p>
+<p>运行级别4：特定运行级别，基本不用的用户模式。graphical.target</p>
+<p>运行级别5：X11，Linux系统的图形界面运行级别。graphical.target</p>
+<p>运行级别6：重新启动。reboot.target</p>
+<p>target文件保存在：/lib/systemd/system目录中。</p>
+<h3 id="系统运行级别之间的切换"><a href="#系统运行级别之间的切换" class="headerlink" title="系统运行级别之间的切换"></a>系统运行级别之间的切换</h3><p>查看系统当前运行级别：runlevel</p>
+<p>init命令进行切换</p>
+<h4 id="方法一：重新设置连接文件"><a href="#方法一：重新设置连接文件" class="headerlink" title="方法一：重新设置连接文件"></a>方法一：重新设置连接文件</h4><p>rm -rf /etc/systemd/system/default.target</p>
+<p>ln -s /lib/systemd/system/runlevlel3.target  /etc/systemd/system/default.tart</p>
+<h4 id="方法二：使用systemctl命令"><a href="#方法二：使用systemctl命令" class="headerlink" title="方法二：使用systemctl命令"></a>方法二：使用systemctl命令</h4><p>systemctl set-default runlevel3.target</p>
+<h4 id="使用systemctl管理服务"><a href="#使用systemctl管理服务" class="headerlink" title="使用systemctl管理服务"></a>使用systemctl管理服务</h4><p>systemctl  选项 服务名</p>
+<p>start：启动      stop：停止   restart：重启  status：服务状态</p>
+<h4 id="设置服务的自启动状态"><a href="#设置服务的自启动状态" class="headerlink" title="设置服务的自启动状态"></a>设置服务的自启动状态</h4><p>使用ntsysv 命令设置服务的自启动</p>
+<p>ntsysv  –runlevel</p>
+<p>level:启动级别</p>
+<h4 id="使用systemctl命令设置服务的自启动"><a href="#使用systemctl命令设置服务的自启动" class="headerlink" title="使用systemctl命令设置服务的自启动"></a>使用systemctl命令设置服务的自启动</h4><p>查看自启动的状态：is-enabled   服务名称</p>
+<p>开启服务的自启动：systemctl enable  服务名称</p>
+<p>关闭服务的自启动：systemctl  disable 服务名称</p>
+<p>查看所有的服务</p>
+<p>关闭selinux安全机制</p>
+<p>setenforce 0</p>
+<p>查看 getenforce  [以P开头：关闭   以E开头：开启]</p>
+<p>systemctl  列出所有的系统服务</p>
+<p>systemctl  list-unit-files   列出所有启动unit</p>
+<p>list-units  -type=service  -all  列出所有service 类型的unit</p>
+<p>list-units  -type=service  -all  grep  cpu   列出cpu电源管理机制的服务</p>
+<p>systemctl poweroff   系统关机</p>
+<p>reboot    重新启动</p>
+<p>suspend     进行睡眠模式</p>
+<p>hibernate    进入休眠模式</p>
+<p>rescue    强制进入救援模式</p>
+<p>energency    强制进入紧急救援模式</p>
+<p>进程的延迟与周期调度</p>
+<p>pa 选项</p>
+<p>-A :显示系统中所有进程的信息，与-e具有相同的功能。</p>
+<p>-a：显示所有用户进程的信息。</p>
+<p>-f：完整的显示进程的所有信息</p>
+<p>-l :  以长格式显示进程信息</p>
+<p>-r:只显示正在运行的进程</p>
+<p>-u:显示面向用户的格式</p>
+<p>-x:显示所有非控制终端上的进程信息。</p>
+<p>-p:显示由进程ID指定的进程的信息</p>
+<p>-t:显示指定终端上的进程的信息。</p>
+<p>杀死进程</p>
+<p>kill  信号代码（9） pid</p>
+<p>killall  信号代码  进程名</p>
+<p>查看内容使用情况：free</p>
+<p>查看CPU使用情况：top  -bn</p>
+<p>产看硬盘使用情况：df   -hT</p>
+<p>进程的调度</p>
+<p>延迟性调试命令：at</p>
+<p>指定时间运行指定的文件</p>
+<p>at  -f  文件   -m  时间</p>
+<p>按CTRL+D退出</p>
+<p>绝对表示法：MM/DD/YYYY   ,today或tomorrow 来表示今天或明天</p>
+<p>相对表示法：now+num+时间单位，minutes，hours，days，weeks</p>
+<p>周期调度：crontab</p>
+<p>文件存放位置：/var/spool/cron</p>
+<p>计划调度服务</p>
+<p>crontab -u user {-e | -l | -r}</p>
+<p>-u:为指定的用户设置计划任务</p>
+<p>-e:编辑计划任务列表</p>
+<p>-l：查看指定用户的计划任务列表，默认当前用户</p>
+<p>-r：删除用户的计划任务列表</p>
+<p>crontab -u user file （file代表任务列表文件）</p>
+<p>格式</p>
+<p>分钟  小时  日期 月份  星期      任务内容设置</p>
+<p>*表示该范围内的任意时间</p>
+<p>，表示间隔的多个不连续时间点</p>
+<p>-表示一个连续的时间范围</p>
+<p>/  指定间隔的时间频率</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/磁盘的分区与挂载/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:15:10.708Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/05/服务与进程/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/文件共享/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:13:16.501Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/服务与进程/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:11:35.821Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2020/02/05/文件共享/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/05/linux/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/linux/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:08:26.801Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/创建数据库和表：/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:02:46.267Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/数据库基础/" class="archive-article-date">
-  	<time datetime="2020-02-05T03:56:45.294Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/数据库ER图基础概念整理/" class="archive-article-date">
-  	<time datetime="2020-02-05T00:32:57.779Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/30/IP地址/" class="archive-article-date">
-  	<time datetime="2020-01-30T01:19:01.453Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-30</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/27/IDS/" class="archive-article-date">
-  	<time datetime="2020-01-27T07:02:11.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-27</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/25/端口安全及stp生成树/" class="archive-article-date">
-  	<time datetime="2020-01-25T08:17:59.766Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-25</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -402,8 +398,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

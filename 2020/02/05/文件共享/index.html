@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 不忘初心</title>
+  <title>不忘初心</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="文件共享NFS ：扩展任务（linux系统之间的文件共享） NFS服务器可以让PC将网络中的NFS服务器共享的目录挂载到本地端的文件系统中，而在本地端的系统中来看，那个远程主机的目录就好像是自己的一个磁盘分区一样，在使用上相当便利；  yum   install -y  nfs-utils yum   install -y  rpcbind systemctl  start  rpcbind">
+<meta property="og:type" content="article">
 <meta property="og:title" content="不忘初心">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/02/05/文件共享/index.html">
 <meta property="og:site_name" content="不忘初心">
+<meta property="og:description" content="文件共享NFS ：扩展任务（linux系统之间的文件共享） NFS服务器可以让PC将网络中的NFS服务器共享的目录挂载到本地端的文件系统中，而在本地端的系统中来看，那个远程主机的目录就好像是自己的一个磁盘分区一样，在使用上相当便利；  yum   install -y  nfs-utils yum   install -y  rpcbind systemctl  start  rpcbind">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-05T04:13:16.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不忘初心">
+<meta name="twitter:description" content="文件共享NFS ：扩展任务（linux系统之间的文件共享） NFS服务器可以让PC将网络中的NFS服务器共享的目录挂载到本地端的文件系统中，而在本地端的系统中来看，那个远程主机的目录就好像是自己的一个磁盘分区一样，在使用上相当便利；  yum   install -y  nfs-utils yum   install -y  rpcbind systemctl  start  rpcbind">
   
     <link rel="alternative" href="/atom.xml" title="不忘初心" type="application/atom+xml">
   
@@ -150,235 +154,218 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-文件共享" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h1><h2 id="NFS-：扩展任务（linux系统之间的文件共享）"><a href="#NFS-：扩展任务（linux系统之间的文件共享）" class="headerlink" title="NFS ：扩展任务（linux系统之间的文件共享）"></a>NFS ：扩展任务（linux系统之间的文件共享）</h2><p> NFS服务器可以让PC将网络中的NFS服务器共享的目录挂载到本地端的文件系统中，而在本地端的系统中来看，那个远程主机的目录就好像是自己的一个磁盘分区一样，在使用上相当便利； </p>
+<p>yum   install -y  nfs-utils</p>
+<p>yum   install -y  rpcbind</p>
+<p>systemctl  start  rpcbind      启动rpc服务</p>
+<p>systemctl start  nfs-server   nfs-secure-server</p>
+<p>启动nfs服务和nfs安全传输服务</p>
+<p>systemctl enable  nfs-server  nfs-secure-server</p>
+<p>自启动</p>
+<p>firewall-cmd –permanent –add-service=nfs success</p>
+<p>配置防火墙方向nfs服务</p>
+<p>firewall-cmd –reload success</p>
+<p>首先创建共享目录   ，然后在/etc/exports配置文件中编辑配置即可</p>
+<p>mkdir   /public</p>
+<p>创建public共享目录</p>
+<p>vim  /etc/exports</p>
+<p> /public 192.168.245.0/24(ro) /protected </p>
+<p> /public 192.168.245.0/24(ro) </p>
+<p> /protected 192.168.245.0/24（rw） </p>
+<p> systemctl reload nfs  </p>
+<p> 重新加载NFS服务，使配置文件生效 </p>
+<h2 id="samba服务"><a href="#samba服务" class="headerlink" title="samba服务"></a>samba服务</h2><p><strong>修改防火墙设置</strong> </p>
+<p>#firewall-cmd –permanent –add-service=samba </p>
+<p>//设置防火墙 </p>
+<p>#firewall-cmd –reload        //重新加载防火墙</p>
+<p>安装 samba 并启动 samba 服务</p>
+<p># yum install -y samba samba-client </p>
+<p>#systemctl start smb.service nmb.service</p>
+<p><strong>建立共享目录</strong> </p>
+<p>mkdir /home/company</p>
+<p><strong>创建访问账号</strong> </p>
+<p>useradd -s /sbin/nologin xzusr </p>
+<p>useradd -s /sbin/nologin gcusr </p>
+<p>useradd -s /sbin/nologin xsusr </p>
+<p>#smbpasswd -a xzusr </p>
+<p>#smbpasswd -a gcusr </p>
+<p>#smbpasswd -a xsusr</p>
+<p>-a 添加 smb 帐号；-x 删除 smb 帐号；-d 禁用 smb 帐号；-e 启用 smb 帐号</p>
+<p><strong>修改配置文件：/etc/samba/smb.conf</strong> </p>
+<p>默认情况下，Samba 已经配置为允许用户通过远程共享访问账号的主目录。 </p>
+<p>[company]  //共享名称为 company </p>
+<p>comment = company share //共享注释 </p>
+<p>path = /home/company  //指定共享路径 </p>
+<p>browseable = yes  //所有人可见 </p>
+<p>guest ok = no  //拒绝匿名访问 </p>
+<p>writeable = yes  //支持写入数据 </p>
+<p>[company] </p>
+<p>comment = company share </p>
+<p>path = /home/company </p>
+<p>guest ok = no  //拒绝匿名访问 </p>
+<p>valid users=xzusr,gcusr,xsusr //允许访问的用户列表 </p>
+<p>write list=xzusr //允许写入的用户列表</p>
+<p>valid users-@tech</p>
+<p>write list=@tech   @代表用户组</p>
+<p>systemctl restart smb nmb使更改生效</p>
+<p>在 linux 客户端访问测试：smbclient -U smbuser //192.168.75.128/company </p>
+<p>查看服务器的共享文件有哪些：smbclient -L 192.168.75.128 </p>
+<p>查看 smbuser 用户可以访问的共享文件：smbclient -L 192.168.75.128 -U smbuser </p>
+<p><strong>在 Linux 下访问 Windows 共享目录的配置方法</strong> </p>
+<p>（1）在 Windows xp 上设置一个共享目录：d:\myfiles </p>
+<p>（2）在 Linux 下安装 samba-client 客户端 </p>
+<p># yum install samba-client </p>
+<p>（3）安装 cifs-utils 软件包 </p>
+<p># yum install cifs-utils </p>
+<p>（4）在 Linux 下创建一个挂载点 </p>
+<p># mkdir /mnt/Windows </p>
+<p>（5）挂载 Windows 上的共享目录 d:\myfiles 到 Linux 下的/mnt/Windows 目录下 </p>
+<p># mount -t cifs -o username=Administrator //192.168.0.3/mytest /mnt/Windows </p>
+<p>Enter password: <strong>****</strong> </p>
+<p>在/etc/fstab 文件中，加入该共享目录的挂载信息 </p>
+<p>//192.168.1.123/redhat_disk /mnt/Windows cifs username=tommy,password=111111 0 0 </p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/磁盘的分区与挂载/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:15:10.708Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/05/文件共享/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/文件共享/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:13:16.501Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/服务与进程/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:11:35.821Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2020/02/05/磁盘的分区与挂载/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/05/服务与进程/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/linux/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:08:26.801Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/创建数据库和表：/" class="archive-article-date">
-  	<time datetime="2020-02-05T04:02:46.267Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/数据库基础/" class="archive-article-date">
-  	<time datetime="2020-02-05T03:56:45.294Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/05/数据库ER图基础概念整理/" class="archive-article-date">
-  	<time datetime="2020-02-05T00:32:57.779Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/30/IP地址/" class="archive-article-date">
-  	<time datetime="2020-01-30T01:19:01.453Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-30</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/27/IDS/" class="archive-article-date">
-  	<time datetime="2020-01-27T07:02:11.994Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-27</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/25/端口安全及stp生成树/" class="archive-article-date">
-  	<time datetime="2020-01-25T08:17:59.766Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-25</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -402,8 +389,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
